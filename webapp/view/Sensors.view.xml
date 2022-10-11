@@ -1,0 +1,52 @@
+<mvc:View controllerName="keepcool.sensormanager.controller.Sensors"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:f="sap.f"
+     displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+     <headerContent>
+        <Button id="_IDGenButton1" icon="sap-icon://menu" press=".onCustomerSelect" tooltip="{i18n>toolTipSelectCustomer}"/>
+    </headerContent>
+         <content>
+            <IconTabBar id="iconTabBar" select=".onSensorSelect" class="sapUiResponsiveContentPadding">
+            <items>
+        <IconTabFilter id="_IDGenIconTabFilter1" showAll="true" text="{i18n>msgFilterAll}" key="All" count="{=${sensorModel>/sensors}.length}"/>
+        <IconTabSeparator id="_IDGenIconTabSeparator1"/>
+        <IconTabFilter id="_IDGenIconTabFilter2" icon="sap-icon://fridge" iconColor="Default" text="{i18n>msgFilterCold}" key="Cold"/>
+        <IconTabFilter id="_IDGenIconTabFilter3" icon="sap-icon://blur" iconColor="Critical" text="{i18n>msgFilterWarm}" key="Warm"/>
+        <IconTabFilter id="_IDGenIconTabFilter4" icon="sap-icon://warning" iconColor="Negative" text="{i18n>msgFilterHot}" key="Hot"/>
+    </items>
+                <content>
+                <f:GridList id="sensorsList"
+    items="{path: 'sensorModel>/sensors', sorter: {path:'customer', group:true, descending: false}}"
+    noDataText="{i18n>noSensorDataText}">
+    <f:customLayout>
+        <grid:GridBoxLayout id="_IDGenGridBoxLayout1"/>
+    </f:customLayout>
+    <f:items>
+        <CustomListItem id="_IDGenCustomListItem1" type="Active" press=".navToSensorStatus">
+    <layoutData>
+        <FlexItemData id="_IDGenFlexItemData1" growFactor="1" shrinkFactor="0"/>
+    </layoutData>
+    <HBox id="_IDGenHBox1" justifyContent="SpaceBetween">
+        <VBox id="_IDGenVBox1" justifyContent="SpaceBetween" class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+            <Title id="_IDGenTitle1" text="{sensorModel>location}"/>
+            <Label id="_IDGenLabel1" text="{i18n>distanceLabel}:"/>
+        </VBox>
+        <core:Icon id="_IDGenIcon1" src="sap-icon://temperature" size="2.5rem"
+    color="{path: 'sensorModel>temperature/value', formatter:'.formatIconColor'}"
+    class="sapUiSmallMarginTop sapUiSmallMarginEnd"/>
+    </HBox>
+    <HBox id="_IDGenHBox2" justifyContent="SpaceBetween" class="sapUiTinyMarginTop sapUiSmallMarginBottom sapUiSmallMarginBeginEnd">
+        <ObjectNumber id="_IDGenObjectNumber1" number="{sensorModel>distance}" unit="{i18n>distanceUnit}"/>
+    </HBox>
+</CustomListItem>
+    </f:items>
+</f:GridList>
+                </content>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>
